@@ -7,7 +7,6 @@ import NoteDetail from './containers/noteDetail';
 
 const filters = DrawerNavigator({
   Home: { screen: HomeScreen },
-  NoteDetail: { screen: NoteDetail },
 }, {
     contentComponent: FilterDrawer,
     drawerWidth: 150,
@@ -16,6 +15,7 @@ const filters = DrawerNavigator({
 
 export default StackNavigator({
   filters: { screen: filters },
+  NoteDetail: { screen: NoteDetail },
 }, {
     headerMode: 'none'
   });
