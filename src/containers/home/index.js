@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Header from '../../components/header';
 import NotesList from '../../components/notesList';
 import { setNotetoView } from '../noteDetail/actions';
-import { updateNote } from './actions';
+import { updateNote, deleteNote } from './actions';
 import { resetUnappliedFilters } from '../filters/actions';
 import { filterConstants } from '../../constants';
 
@@ -54,7 +54,9 @@ class HomeScreen extends React.Component {
           updateHandler={this.props.updateNote}
           notes={this.props.filterdNotes}
           setNotetoViewHandler={this.props.setNotetoView}
-          navigation={this.props.navigation} />
+          navigation={this.props.navigation}
+          deleteNoteHandler={this.props.deleteNote}
+        />
       </View>
     );
   }
@@ -68,6 +70,7 @@ export default compose(
     }), {
       setNotetoView,
       updateNote,
+      deleteNote,
       resetUnappliedFilters,
     }
   ),
