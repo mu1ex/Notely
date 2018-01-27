@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { compose, withHandlers } from 'recompose';
+import moment from 'moment';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { setNotetoView } from '../../containers/noteDetail/actions';
 import { extractContentSummary } from '../../utils/stringUtils';
@@ -56,7 +57,7 @@ const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, togg
         {extractContentSummary(item.content)}
       </Text>
       <Text style={styles.timeStamp}>
-        {item.updatedAt}
+        {moment(item.updatedAt).calendar()}
       </Text>
     </View>
     <View style={styles.iconContainer}>

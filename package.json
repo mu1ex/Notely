@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json"
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "moment": "2.20.1",
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.0",

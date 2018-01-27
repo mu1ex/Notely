@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
+import moment from 'moment';
 import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Header from '../../components/header';
 import { clearDetailNoteData } from './actions';
+import { updateNote } from '../home/actions';
 
 class NoteDetail extends React.Component {
   state = {
@@ -31,7 +33,8 @@ class NoteDetail extends React.Component {
   }
 
   onPressSave = () => {
-
+    this.props.updateNote(this.props.currentSelectedNote.id, { content: this.state.content });
+    this.setState({ isEditMode: false });
   }
 
   setContent = (content) => {
@@ -67,7 +70,7 @@ class NoteDetail extends React.Component {
             </View>
             {!isEditMode && <View style={styles.titleContainer}>
               <Text style={styles.title}>{title}</Text>
-              <Text style={styles.timeStamp}>{`Last updated: ${updatedAt}`}</Text>
+              <Text style={styles.timeStamp}>{moment(updatedAt).calendar()}</Text>
             </View>}
           </View>
         </Header>
@@ -141,6 +144,7 @@ export default connect(
     currentSelectedNote: state.noteDetail.currentSelectedNote,
   }),
   {
-    clearDetailNoteData
+    clearDetailNoteData,
+    updateNote
   }
 )(NoteDetail);

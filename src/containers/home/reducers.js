@@ -1,11 +1,12 @@
 import ShortId from 'shortid';
+import moment from 'moment';
 import { ADD_NOTE, UPDATE_NOTE, DELETE_NOTE } from './actions';
 
 const allNotes = [{
   id: ShortId.generate(),
   title: 'This is a sample note.',
   content: 'This is a sample note.\nThis is where the content resides. And this shit is very very long.',
-  updatedAt: 'Todat at 6:30 PM',
+  updatedAt: moment().toISOString(),
   isHearted: false,
   isFavourite: false,
 }]
