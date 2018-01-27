@@ -1,11 +1,17 @@
 import { truncate } from 'lodash';
 
-export const extractTitleFromContent = content => {
-  return truncate(content.split('\n')[0], { length: 20 });
-}
+export const truncateToLength = (content, length = 70) => (
+  truncate(content, { length })
+);
 
-export const extractContentSummary = content => {
-  const splitContent = content.split('\n');
-  const summary = splitContent.length > 0 ? splitContent[1] : splitContent[0];
-  return truncate(summary, { length: 70 });
-}
+export const getPlainText = text => (
+  text.replace(/(\r\n|\n|\r)/gm, "")
+);
+
+export const getTruncatedContent = content => (
+  truncateToLength(getPlainText(content))
+);
+
+export const getTruncatedTitle = title => (
+  truncateToLength(getPlainText(title, 50))
+);

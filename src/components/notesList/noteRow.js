@@ -4,7 +4,7 @@ import { compose, withHandlers } from 'recompose';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { setNotetoView } from '../../containers/noteDetail/actions';
-import { extractContentSummary } from '../../utils/stringUtils';
+import { getTruncatedContent } from '../../utils/stringUtils';
 
 
 const styles = StyleSheet.create({
@@ -56,7 +56,7 @@ const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, togg
           {item.title}
         </Text>
         <Text style={styles.summary}>
-          {extractContentSummary(item.content)}
+          {getTruncatedContent(item.content)}
         </Text>
         <Text style={styles.timeStamp}>
           {moment(item.updatedAt).calendar()}

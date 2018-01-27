@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import { get } from 'lodash';
 import moment from 'moment';
 import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
@@ -11,6 +12,7 @@ import { updateNote } from '../home/actions';
 class NoteDetail extends React.Component {
   state = {
     isEditMode: false,
+    title: '',
     content: '',
   }
 
@@ -27,18 +29,24 @@ class NoteDetail extends React.Component {
     if (this.state.isEditMode) {
       this.setState({ isEditMode: false });
     } else {
-      const masterContent = this.props.currentSelectedNote.content;
-      this.setState({ isEditMode: true, content: masterContent });
+      const { currentSelectedNote } = this.props;
+      const masterContent = get(currentSelectedNote, 'content', '');
+      const masterTitle = get(currentSelectedNote, 'title');
+      this.setState({ isEditMode: true, content: masterContent, title: masterTitle });
     }
   }
 
   onPressSave = () => {
-    this.props.updateNote(this.props.currentSelectedNote.id, { content: this.state.content });
+    this.props.updateNote(this.props.currentSelectedNote.id, { content: this.state.content, title: this.state.title });
     this.setState({ isEditMode: false });
   }
 
   setContent = (content) => {
     this.setState({ content });
+  }
+
+  setTitle = (title) => {
+    this.setState({ title });
   }
 
   render() {
@@ -77,12 +85,23 @@ class NoteDetail extends React.Component {
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {
             isEditMode
-              ? <TextInput
-                multiline={true}
-                underlineColorAndroid={'transparent'}
-                onChangeText={this.setContent}
-                value={this.state.content}
-              />
+              ? <View>
+                <TextInput
+                  style={{ fontSize: 25, fontWeight: '600' }}
+                  multiline={true}
+                  placeholder={'Add Title...'}
+                  underlineColorAndroid={'transparent'}
+                  onChangeText={this.setTitle}
+                  value={this.state.title}
+                />
+                <TextInput
+                  multiline={true}
+                  placeholder={'Add note...'}
+                  underlineColorAndroid={'transparent'}
+                  onChangeText={this.setContent}
+                  value={this.state.content}
+                />
+              </View>
               : <Text>
                 {content}
               </Text>
