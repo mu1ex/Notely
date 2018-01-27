@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose, withProps } from 'recompose';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
@@ -7,6 +8,8 @@ import NotesList from '../../components/notesList';
 import { setNotetoView } from '../noteDetail/actions';
 import { updateNote } from './actions';
 import { resetUnappliedFilters } from '../filters/actions';
+import { filterConstants } from '../../constants';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +52,7 @@ class HomeScreen extends React.Component {
         </Header>
         <NotesList
           updateHandler={this.props.updateNote}
-          notes={this.props.notes}
+          notes={this.props.filterdNotes}
           setNotetoViewHandler={this.props.setNotetoView}
           navigation={this.props.navigation} />
       </View>
@@ -57,12 +60,33 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    notes: state.notes.allNotes
-  }), {
-    setNotetoView,
-    updateNote,
-    resetUnappliedFilters,
-  }
+export default compose(
+  connect(
+    state => ({
+      notes: state.notes.allNotes,
+      appliedFilters: state.filters.appliedFilters,
+    }), {
+      setNotetoView,
+      updateNote,
+      resetUnappliedFilters,
+    }
+  ),
+  withProps(({ appliedFilters, notes }) => {
+    let filterdNotes = notes;
+    if (appliedFilters.length > 0) {
+      appliedFilters.map((filterItem) => {
+        if (filterItem === filterConstants.HEARTED) {
+          filterdNotes = filterdNotes.filter(item => item.isHearted)
+        } else if (filterItem === filterConstants.FAVOURITED) {
+          filterdNotes = filterdNotes.filter(item => item.isFavourite)
+        }
+      });
+    }
+    return {
+      filterdNotes
+    }
+  }),
 )(HomeScreen)
+
+
+

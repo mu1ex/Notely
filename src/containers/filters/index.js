@@ -9,8 +9,8 @@ import styles from './styles';
 import { filters } from '../../constants';
 import { toggleFilter, applyFilters } from './actions';
 
-applyFiltersHandler = (filterhandler, navProps) => () => {
-  filterhandler();
+applyFiltersHandler = (filterhandler, navProps, selectedFilters) => () => {
+  filterhandler(selectedFilters);
   navProps.navigate('DrawerToggle');
 }
 
@@ -35,7 +35,7 @@ const FilterDrawer = ({ unAppliedFilters, applyFilters, toggleFilter, navigation
       }
     </View>
     <View style={styles.bottomContent}>
-      <TouchableOpacity onPress={applyFiltersHandler(applyFilters, navigation)} style={styles.applyButton}>
+      <TouchableOpacity onPress={applyFiltersHandler(applyFilters, navigation, unAppliedFilters)} style={styles.applyButton}>
         <Text style={styles.label}>APPLY</Text>
       </TouchableOpacity>
     </View>

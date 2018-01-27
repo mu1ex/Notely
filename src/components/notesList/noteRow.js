@@ -61,7 +61,7 @@ const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, togg
     </View>
     <View style={styles.iconContainer}>
       <TouchableOpacity onPress={toggleStar} style={styles.buttonContainer}>
-        <Icon name={'md-star'} size={30} color={item.isStarred ? '#F8D01C' : '#F1F1F1'} />
+        <Icon name={'md-star'} size={30} color={item.isHearted ? '#F8D01C' : '#F1F1F1'} />
       </TouchableOpacity>
       <TouchableOpacity onPress={toggleFavourite} style={styles.buttonContainer}>
         <Icon name={'md-heart'} size={30} color={item.isFavourite ? '#FD374F' : '#F1F1F1'} />
@@ -77,7 +77,7 @@ export default compose(
       updateHandler(item.id, { isFavourite: !item.isFavourite })
     },
     toggleStar: ({ item, updateHandler }) => () => {
-      updateHandler(item.id, { isStarred: !item.isStarred })
+      updateHandler(item.id, { isHearted: !item.isHearted })
     }
   })
 )(NoteRow);

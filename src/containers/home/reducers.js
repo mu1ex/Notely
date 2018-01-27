@@ -1,15 +1,17 @@
 import ShortId from 'shortid';
 import { ADD_NOTE, UPDATE_NOTE, DELETE_NOTE } from './actions';
 
+const allNotes = [{
+  id: ShortId.generate(),
+  title: 'This is a sample note.',
+  content: 'This is a sample note.\nThis is where the content resides. And this shit is very very long.',
+  updatedAt: 'Todat at 6:30 PM',
+  isHearted: false,
+  isFavourite: false,
+}]
+
 const initialAppState = {
-  allNotes: [{
-    id: ShortId.generate(),
-    title: 'This is a sample note.',
-    content: 'This is a sample note.\nThis is where the content resides. And this shit is very very long.',
-    updatedAt: 'Todat at 6:30 PM',
-    isStarred: false,
-    isFavourite: false,
-  }]
+  allNotes,
 }
 
 const notesReducer = (state = initialAppState, action) => {
@@ -23,6 +25,7 @@ const notesReducer = (state = initialAppState, action) => {
         }]
       };
     }
+
     case UPDATE_NOTE: { // These are sparse updates!
       return {
         ...state,
@@ -31,12 +34,14 @@ const notesReducer = (state = initialAppState, action) => {
           : item)
       };
     }
+
     case DELETE_NOTE: {
       return {
         ...state,
         allNotes: state.allNotes.filter(item => item.id !== action.payload)
       }
     }
+
     default:
       return state;
   }

@@ -6,8 +6,8 @@ export function toggleFilter(filter) {
   return { type: TOGGLE_FILTER, payload: filter }
 }
 
-export function applyFilters() {
-  return { type: APPLY_FILTERS }
+export function applyFilters(filters) {
+  return { type: APPLY_FILTERS, payload: filters }
 }
 
 export function resetUnappliedFilters() {
