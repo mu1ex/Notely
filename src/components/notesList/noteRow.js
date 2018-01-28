@@ -48,7 +48,7 @@ const onPressRow = (navObject, setDetailNoteHandler, note) => () => {
   navObject.navigate('NoteDetail');
 }
 
-const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, toggleStar }) => (
+const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, toggleHearted }) => (
   <TouchableHighlight underlayColor={'#DDDDDD'} onPress={onPressRow(navigation, setDetailNoteHandler, item)}>
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -63,11 +63,11 @@ const NoteRow = ({ item, navigation, setDetailNoteHandler, toggleFavourite, togg
         </Text>
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={toggleStar} style={styles.buttonContainer}>
-          <Icon name={'md-star'} size={30} color={item.isHearted ? '#F8D01C' : '#F1F1F1'} />
-        </TouchableOpacity>
         <TouchableOpacity onPress={toggleFavourite} style={styles.buttonContainer}>
-          <Icon name={'md-heart'} size={30} color={item.isFavourite ? '#FD374F' : '#F1F1F1'} />
+          <Icon name={'md-star'} size={30} color={item.isFavourite ? '#F8D01C' : '#F1F1F1'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleHearted} style={styles.buttonContainer}>
+          <Icon name={'md-heart'} size={30} color={item.isHearted ? '#FD374F' : '#F1F1F1'} />
         </TouchableOpacity>
       </View>
     </View>
@@ -80,7 +80,7 @@ export default compose(
     toggleFavourite: ({ item, updateHandler }) => () => {
       updateHandler(item.id, { isFavourite: !item.isFavourite })
     },
-    toggleStar: ({ item, updateHandler }) => () => {
+    toggleHearted: ({ item, updateHandler }) => () => {
       updateHandler(item.id, { isHearted: !item.isHearted })
     }
   })

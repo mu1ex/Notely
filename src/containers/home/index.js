@@ -9,6 +9,7 @@ import { setNotetoView } from '../noteDetail/actions';
 import { updateNote, deleteNote } from './actions';
 import { resetUnappliedFilters } from '../filters/actions';
 import { filterConstants } from '../../constants';
+import FilterIcon from '../../components/filterIcon';
 
 
 const styles = StyleSheet.create({
@@ -45,9 +46,7 @@ class HomeScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text style={styles.title}>Notely</Text>
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity onPress={this.openFilters} style={{ marginRight: 5, paddingVertical: 5, paddingHorizontal: 10 }}>
-                <Icon name={'md-funnel'} size={25} color={'#000000'} />
-              </TouchableOpacity>
+              <FilterIcon onPressHandler={this.openFilters} isFiltersApplied={this.props.appliedFilters.length > 0}/>
               <TouchableOpacity onPress={this.openAddNoteView} style={{ paddingVertical: 5, paddingHorizontal: 10 }}>
                 <Icon name={'md-add'} size={25} color={'#000000'} />
               </TouchableOpacity>
