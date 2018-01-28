@@ -21,10 +21,7 @@ const notesReducer = (state = initialAppState, action) => {
     case ADD_NOTE: {
       return {
         ...state,
-        allNotes: [...state.allNotes, {
-          id: ShortId.generate(),
-          ...action.payload
-        }]
+        allNotes: [...state.allNotes, { ...action.payload }]
       };
     }
 

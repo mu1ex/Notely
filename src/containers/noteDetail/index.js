@@ -7,17 +7,24 @@ import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Header from '../../components/header';
 import { clearDetailNoteData } from './actions';
-import { updateNote } from '../home/actions';
+import { updateNote, createNote } from '../home/actions';
 
 class NoteDetail extends React.Component {
   state = {
     isEditMode: false,
+    isNewNote: false,
     title: '',
     content: '',
   }
 
+  componentWillMount() {
+    if (get(this.props.navigation, 'state.params.createMode', false)) {
+      this.setState({ isEditMode: true, isNewNote: true });
+    }
+  }
+
   onPressBack = () => {
-    if (this.state.isEditMode) {
+    if (this.state.isEditMode && !this.state.isNewNote) {
       this.setState({ isEditMode: false });
     } else {
       const { navigation } = this.props;
@@ -37,8 +44,12 @@ class NoteDetail extends React.Component {
   }
 
   onPressSave = () => {
-    this.props.updateNote(this.props.currentSelectedNote.id, { content: this.state.content, title: this.state.title });
-    this.setState({ isEditMode: false });
+    if (this.state.isNewNote) {
+      this.props.createNote(this.state.content, this.state.title);
+    } else {
+      this.props.updateNote(this.props.currentSelectedNote.id, { content: this.state.content, title: this.state.title });
+    }
+    this.setState({ isEditMode: false, isNewNote: false });
   }
 
   setContent = (content) => {
@@ -164,6 +175,7 @@ export default connect(
   }),
   {
     clearDetailNoteData,
-    updateNote
+    updateNote,
+    createNote,
   }
 )(NoteDetail);

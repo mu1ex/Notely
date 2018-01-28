@@ -34,6 +34,10 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('DrawerToggle');
   }
 
+  openAddNoteView = () => {
+    this.props.navigation.navigate('NoteDetail', { createMode: true });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -44,7 +48,7 @@ class HomeScreen extends React.Component {
               <TouchableOpacity onPress={this.openFilters} style={{ marginRight: 5, paddingVertical: 5, paddingHorizontal: 10 }}>
                 <Icon name={'md-funnel'} size={25} color={'#000000'} />
               </TouchableOpacity>
-              <TouchableOpacity style={{ paddingVertical: 5, paddingHorizontal: 10 }}>
+              <TouchableOpacity onPress={this.openAddNoteView} style={{ paddingVertical: 5, paddingHorizontal: 10 }}>
                 <Icon name={'md-add'} size={25} color={'#000000'} />
               </TouchableOpacity>
             </View>
